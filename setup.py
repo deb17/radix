@@ -4,8 +4,8 @@ with open('README.md', 'r') as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='radix',
-    version='0.0.1',
+    name='radix-ops',
+    version='0.0.2',
     author='Debashish Palit',
     author_email='dpalit17@outlook.com',
     description='Convert between radices and perform arithmetic.',

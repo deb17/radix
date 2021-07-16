@@ -1,4 +1,4 @@
-# radix
+# radix-ops
 
 Convert numbers - both integer and floating-point - from one base to another.
 Perform arithmetic operations in a given base.
@@ -6,7 +6,7 @@ Perform arithmetic operations in a given base.
 ### Installation
 
 ```Shell
-pip install radix
+pip install radix-ops
 ```
 
 ### Usage
