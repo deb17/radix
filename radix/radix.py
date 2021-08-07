@@ -169,6 +169,16 @@ class Num:
         result = a ** b
         return self.__class__(result, 10).to(self.base)
 
+    def __neg__(self):
+
+        a, _ = self._num_values(self.__class__(-1))
+        result = -1 * a
+        return self.__class__(result, 10).to(self.base)
+
+    def __pos__(self):
+
+        return self
+
     def _num_values(self, other):
         '''Since the base10 value is a string, we need to convert it to
         an int or a float depending on the value.'''
