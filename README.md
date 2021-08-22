@@ -20,11 +20,21 @@ b = Num('ff', 16)  # FF or 255 in base 16
 print(a.to(2))     # Convert to base 2 (100000)
 print(a + b)       # Result in base 16 (11F)
 ```
+An easier way to evaluate expressions:
 
+```Python
+from radix import expr
+
+# All numbers in base 16. result is a `Num` instance.
+result = expr('a + b * c', 16)
+
+print(result)  # prints 8E
+print(result.to(10))  # prints 142
+```
 ### Examples
 
 ```Python
->>> from radix import Num
+>>> from radix import Num, expr
 >>> Num(value='FE', base=16).to(base=10)
 254
 >>> Num(1100, 2).to(10)
@@ -40,6 +50,11 @@ A.C
 -9
 >>> (Num('1a', 16) - Num('ff', 16)) * Num(2, 16)  # (26 - 255) * 2 = -458 = -0x1ca
 -1CA
+>>> expr('-fe', 16, show=True).to(10)
+-Num('fe', 16)
+-254
+>>> expr('b / (a + 1.5) * 2', 12)
+1.B15A50B68B
 ```
 
 ### Note
