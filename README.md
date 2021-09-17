@@ -31,6 +31,24 @@ result = expr('a + b * c', 16)
 print(result)  # prints 8E
 print(result.to(10))  # prints 142
 ```
+#### (Signed) binary numbers
+
+```Python
+>>> from radix import Bin  # `Bin` is a subclass of `Num`
+>>> num = Bin(-7)
+>>> num
+1001  # -ve number in 2's complement
+>>> num.twos_compl()  # 2's complement
+'1001'
+>>> num.ones_compl()  # 1's complement
+'1000'
+>>> num.format(size=8, blanks_every=4)  # format 2's complement
+'1111 1001'
+>>> num.sign_mag()  # sign magnitude representation
+'1111'
+>>> Bin(-5) + Bin(3) - Bin(8)  # 2's complement arithmetic
+10110  # -10 in 2's complement
+```
 ### Examples
 
 ```Python
@@ -55,6 +73,11 @@ A.C
 -254
 >>> expr('b / (a + 1.5) * 2', 12)
 1.B15A50B68B
+>>> from radix import dim_radix_compl, radix_compl
+>>> dim_radix_compl(Num('012398'))  # 9's complement (diminished radix complement)
+'987601'
+>>> radix_compl(Num('012398'))  # 10's complement (radix complement)
+'987602'
 ```
 
 ### Note

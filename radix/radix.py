@@ -26,7 +26,7 @@ class Num:
             if self.base == 10:
                 self.base10_value = self.value
             else:
-                self.base10_value = str(self.to(10))
+                self.base10_value = self.to(10).value
 
     def __repr__(self):
         return self.value
@@ -54,6 +54,9 @@ class Num:
             if self.base10_value is None:
                 return self.to_base10()
             return self.__class__(self.base10_value, 10)
+
+        if base == self.base:
+            return self
 
         int_part, *rest = self.base10_value.split('.')
         frac_part = '.' + rest[0] if rest else '0'
@@ -112,6 +115,13 @@ class Num:
             result = str(int_value)
 
         return self.__class__(result, 10)
+
+    def __eq__(self, other):
+
+        a, b = self._num_values(other)
+        if a == b:
+            return True
+        return False
 
     def __add__(self, other):
 
