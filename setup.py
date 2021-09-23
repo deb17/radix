@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='radix-ops',
-    version='0.3.0',
+    version='0.3.1',
     author='Debashish Palit',
     author_email='dpalit17@outlook.com',
     description='Convert between radices and perform arithmetic.',

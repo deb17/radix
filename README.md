@@ -49,7 +49,7 @@ print(result.to(10))  # prints 142
 >>> Bin(-5) + Bin(3) - Bin(8)  # 2's complement arithmetic
 10110  # -10 in 2's complement
 ```
-### Examples
+## Examples
 
 ```Python
 >>> from radix import Num, expr

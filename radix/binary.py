@@ -197,3 +197,17 @@ class Bin(Num):
         twos_compl = self._add(a, b)
 
         return self.__class__(twos_compl=twos_compl)
+
+    @classmethod
+    def from_Num(cls, instance: Num):
+
+        return cls(instance.value, instance.base, instance.base10_value)
+
+    def __getattr__(self, name):
+
+        if name in ('value', 'base', 'base10_value'):
+            raise NotImplementedError('Use `Num` class and convert the result '
+                                      'to the `Bin` class with the `from_Num` '
+                                      'classmethod.')
+
+        raise AttributeError(f"'Bin' object has no attribute {name!r}")
