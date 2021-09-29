@@ -4,3 +4,5 @@ dist/
 build/
 *.egg-info/
 
+# script code in README.md
+readme.py

@@ -36,8 +36,10 @@ print(result.to(10))  # prints 142
 ```Python
 >>> from radix import Bin  # `Bin` is a subclass of `Num`
 >>> num = Bin(-7)
+>>>
+>>> # -ve number in 2's complement
 >>> num
-1001  # -ve number in 2's complement
+1001
 >>> num.twos_compl()  # 2's complement
 '1001'
 >>> num.ones_compl()  # 1's complement
@@ -46,8 +48,11 @@ print(result.to(10))  # prints 142
 '1111 1001'
 >>> num.sign_mag()  # sign magnitude representation
 '1111'
+>>>
+>>> # -10 in 2's complement
 >>> Bin(-5) + Bin(3) - Bin(8)  # 2's complement arithmetic
-10110  # -10 in 2's complement
+10110
+
 ```
 ## Examples
 
@@ -78,9 +83,11 @@ A.C
 '987601'
 >>> radix_compl(Num('012398'))  # 10's complement (radix complement)
 '987602'
+
 ```
 
 ### Note
 
 1. Base should be between 2 and 36.
 
+2. Very large or very small floating-point numbers should be in quotes.
