@@ -16,27 +16,25 @@ class Num:
     base - The base of the given value (should be between 2 and 36).
     '''
 
-    def __init__(self, value, base=10, _base10_value=None):
+    def __init__(self, value, base=10):
         self.value = str(value).upper()
         self.base = int(base)
         if not (2 <= base <= 36):
             raise ValueError('Base must be an int between 2 and 36.')
         self.validate()
-        self.base10_value = _base10_value
-        if self.base10_value is None:
-            if self.base == 10:
-                self.base10_value = self._get_numeric_value(value)
-            else:
-                self.base10_value = self._to_base10()
+        if self.base == 10:
+            self.base10_value = self._get_numeric_value(value)
+        else:
+            self.base10_value = self._to_base10()
 
     def _get_numeric_value(self, value):
         '''Convert possible string representation to number.'''
 
         if isinstance(value, str):
-            if '.' in value:
-                return float(value)
-            else:
+            try:
                 return int(value)
+            except ValueError:
+                return float(value)
 
         return value
 
@@ -56,8 +54,7 @@ class Num:
 
     def to(self, base, prec=10):
         '''Convert a number in a certain base to a new base, and return
-        an instance of `Num` or its subclass. The stored base 10 value
-        is used in the process.
+        the instance. The stored base 10 value is used in the process.
 
         Parameters -
         base - The target base
@@ -68,7 +65,9 @@ class Num:
             return self
 
         if base == 10:
-            return self.__class__(self.base10_value, 10)
+            self.value = str(self.base10_value)
+            self.base = 10
+            return self
 
         frac_part, int_part = math.modf(self.base10_value)
 
@@ -93,7 +92,9 @@ class Num:
         else:
             result = sign + int_val
 
-        return self.__class__(result, base, self.base10_value)
+        self.value = result
+        self.base = base
+        return self
 
     def _to_base10(self):
         '''Calculate the base 10 value of the stored number.'''

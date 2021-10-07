@@ -1,32 +1,20 @@
 '''This module represents signed binary numbers in 2's complement
 form. It also enables 2's complement addition and subtraction.'''
 
-from functools import wraps
+from contextlib import contextmanager
 
 from radix.radix import Num
 from radix.complement import dim_radix_compl, radix_compl
 
-CACHE = {}
 
+@contextmanager
+def reset_number(n: Num):
 
-def cache(maxsize=128):
-    '''Decorator to prevent recalculation of 2's complement.'''
-
-    def deco(func):
-        @wraps(func)
-        def wrapper(self):
-
-            if len(CACHE) > maxsize:
-                CACHE.clear()
-
-            val = CACHE.get(self.base10_value)
-            if not val:
-                val = func(self)
-                CACHE[self.base10_value] = val
-            return val
-
-        return wrapper
-    return deco
+    value = n.value
+    base = n.base
+    yield
+    n.value = value
+    n.base = base
 
 
 class Bin(Num):
@@ -46,7 +34,7 @@ class Bin(Num):
         '''
         if twos_compl is None:
             super().__init__(*args, **kwargs)
-        # self.called = False
+
         self._2_compl = twos_compl or self.twos_compl()
 
     def __repr__(self):
@@ -57,17 +45,13 @@ class Bin(Num):
         with 0.
         '''
 
-        # To prevent `twos_compl` method from being called again, we
-        # create a `Num` instance instead of using `self` which is a
-        # `Bin` instance.
-        base2_num = Num(self.value, self.base, self.base10_value).to(2)
-        value = base2_num.value.lstrip('+-')
+        with reset_number(self):
+            value = self.to(2).value.lstrip('+-')
         if value[0] in ('1', '.'):
             value = '0' + value
         n = Num(value, 2)
         return n
 
-    @cache()
     def twos_compl(self):
         '''Find the 2's complement.'''
 
@@ -95,7 +79,8 @@ class Bin(Num):
     def sign_mag(self):
         '''Find the sign magnitude representation.'''
 
-        value = self.to(2).value.lstrip('+-')
+        with reset_number(self):
+            value = self.to(2).value.lstrip('+-')
         if self.sign() == -1:
             return '1' + value
         elif value[0] in ('1', '.'):
@@ -201,7 +186,16 @@ class Bin(Num):
     @classmethod
     def from_Num(cls, instance: Num):
 
-        return cls(instance.value, instance.base, instance.base10_value)
+        # Prevent recalculation of base 10 value when Bin instance is
+        # created.
+        with reset_number(instance):
+            instance.to(10)
+            inst = cls(instance.value, 10)
+
+        inst.value = instance.value
+        inst.base = instance.base
+
+        return inst
 
     def __getattr__(self, name):
 

@@ -15,9 +15,10 @@ pip install radix-ops
 from radix import Num
 
 a = Num(20, 16)    # The number 20 in base 16
-b = Num('ff', 16)  # FF or 255 in base 16
-
 print(a.to(2))     # Convert to base 2 (100000)
+
+a = Num(20, 16)
+b = Num('ff', 16)  # FF or 255 in base 16
 print(a + b)       # Result in base 16 (11F)
 ```
 An easier way to evaluate expressions:
@@ -90,4 +91,6 @@ A.C
 
 1. Base should be between 2 and 36.
 
-2. Very large or very small floating-point numbers should be in quotes.
+2. The `.to` method mutates the number, i.e. changes its value and base. 
+
+3. Very large or very small floating-point numbers should be in quotes.

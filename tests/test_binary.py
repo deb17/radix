@@ -1,19 +1,14 @@
 import pytest
 
 from radix import Bin, Num
-from radix.binary import CACHE
 
 
 def test_2s_compl():
 
     n1 = Bin(-13)
-
-    assert -13 in CACHE
     assert n1.twos_compl() == '10011'
 
     n2 = Bin(19)
-
-    assert 19 in CACHE
     assert n2.twos_compl() == '010011'
 
     n3 = Bin(-10.75)

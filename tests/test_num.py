@@ -15,10 +15,13 @@ def test_base16():
 
     a_16 = Num(20, 16)
     a_2 = a_16.to(2)
-    a_10 = a_16.to(10)
 
     assert str(a_2) == '100000'
-    assert str(a_10) == '32'
+
+    b_16 = Num(20, 16)
+    b_10 = b_16.to(10)
+
+    assert str(b_10) == '32'
 
 
 def test_invalid_num():
