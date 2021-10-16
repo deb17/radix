@@ -1,20 +1,8 @@
 '''This module represents signed binary numbers in 2's complement
 form. It also enables 2's complement addition and subtraction.'''
 
-from contextlib import contextmanager
-
 from radix.radix import Num
 from radix.complement import dim_radix_compl, radix_compl
-
-
-@contextmanager
-def reset_number(n: Num):
-
-    value = n.value
-    base = n.base
-    yield
-    n.value = value
-    n.base = base
 
 
 class Bin(Num):
@@ -45,8 +33,7 @@ class Bin(Num):
         with 0.
         '''
 
-        with reset_number(self):
-            value = self.to(2).value.lstrip('+-')
+        value = self.clone().to(2).value.lstrip('+-')
         if value[0] in ('1', '.'):
             value = '0' + value
         n = Num(value, 2)
@@ -79,8 +66,7 @@ class Bin(Num):
     def sign_mag(self):
         '''Find the sign magnitude representation.'''
 
-        with reset_number(self):
-            value = self.to(2).value.lstrip('+-')
+        value = self.clone().to(2).value.lstrip('+-')
         if self.sign() == -1:
             return '1' + value
         elif value[0] in ('1', '.'):
@@ -188,10 +174,7 @@ class Bin(Num):
 
         # Prevent recalculation of base 10 value when Bin instance is
         # created.
-        with reset_number(instance):
-            instance.to(10)
-            inst = cls(instance.value, 10)
-
+        inst = cls(instance.base10_value, 10)
         inst.value = instance.value
         inst.base = instance.base
 

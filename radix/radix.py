@@ -4,6 +4,7 @@ given base.
 '''
 from string import digits, ascii_uppercase
 import math
+from copy import copy
 
 # 10 digits + 26 letters = 36 - upto base 36 is supported
 DIGITS = digits + ascii_uppercase
@@ -40,6 +41,9 @@ class Num:
 
     def __repr__(self):
         return self.value
+
+    def clone(self):
+        return copy(self)
 
     def validate(self):
         '''Check if the user input is a valid number in the specified
