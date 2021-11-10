@@ -59,6 +59,7 @@ class Num:
     def to(self, base, prec=10):
         '''Convert a number in a certain base to a new base, and return
         the instance. The stored base 10 value is used in the process.
+        This is an inplace conversion.
 
         Parameters -
         base - The target base
@@ -99,6 +100,11 @@ class Num:
         self.value = result
         self.base = base
         return self
+
+    def conv(self, to_base, prec=10):
+        '''Convert number to given base and return a new instance.'''
+
+        return self.clone().to(to_base, prec)
 
     def _to_base10(self):
         '''Calculate the base 10 value of the stored number.'''

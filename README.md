@@ -15,11 +15,15 @@ pip install radix-ops
 from radix import Num
 
 a = Num(20, 16)    # The number 20 in base 16
-print(a.to(2))     # Convert to base 2 (100000)
+print(a.to(2))     # Convert to base 2 (100000) - inplace conversion
 
 a = Num(20, 16)
 b = Num('ff', 16)  # FF or 255 in base 16
 print(a + b)       # Result in base 16 (11F)
+
+c = a.conv(2)      # To create a new instance upon conversion (to base 2)
+print(a)           # 20
+print(c)           # 100000
 ```
 An easier way to evaluate expressions:
 
